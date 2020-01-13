@@ -1,0 +1,1 @@
+chrome.runtime.getBackgroundPage(({background})=>{console.log(background)}) 
