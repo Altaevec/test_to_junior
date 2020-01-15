@@ -1,36 +1,47 @@
 class Background {
-    constructor() {
-        this.list = [];
-        this.domainList = [];
-    };
-    async load() {
-        const response = await fetch("http://www.softomate.net/ext/employees/list.json");
+  constructor() {
+    this.time = 0;
+    this.json = "";
+    this.sitesList = [];
+    this.load();
+  }
+  async load() {
+    const response = await fetch(
+      "http://www.softomate.net/ext/employees/list.json"
+    );
 
-        this.list = await response.json();
-        this.list.forEach((item) => { //фильтр
-            this.domainList.push(item.domain);
-        });
+    this.sitesList = await response.json();
 
+    //Работа с localStorage
+    const merchants = localStorage.getItem("merchants");
+    this.time = new Date().getTime();
+    this.json = JSON.stringify(this.sitesList);
+
+    if (merchants === null) {
+      this.updateMerchants();
+
+      console.log("added");
+    } else if (
+      merchants !== this.json ||
+      this.time - +localStorage.getItem("time") > 10000 //* 60 * 60 стоит 10сек
+    ) {
+      this.updateMerchants();
+
+      console.log("modify");
+    } else {
+      console.log("sasamba");
     }
-};
+  }
+  updateMerchants() {
+    localStorage.setItem("merchants", this.json);
+    localStorage.setItem("time", this.time);
+  }
+}
 
 window.background = new Background();
 
-
-
-background.load();
-
-console.log(background);
-
-window.location;
-if (background.list.find(item => item.domain === window.location)) {
-    console.log("True")
-};
-
-
-chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-
-    console.log(request);
-    // console.log(sender);
-    sendResponse("test");
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  //   console.log(request);
+  // console.log(sender);
+  sendResponse("test");
 });
