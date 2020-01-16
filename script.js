@@ -1,8 +1,5 @@
-chrome.runtime.sendMessage(
-  {
-    location: window.location
-  },
-  function(response) {
-    console.log(response);
-  }
-);
+const hostName = location.hostname;
+chrome.runtime.sendMessage(hostName);
+console.log(hostName);
+
+// location: window.location;

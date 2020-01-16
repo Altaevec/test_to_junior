@@ -41,7 +41,27 @@ class Background {
 window.background = new Background();
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  //   console.log(request);
-  // console.log(sender);
+  //   console.log(response);
+  //   console.log(sender);
+  //   console.log(sendResponse);
   sendResponse("test");
+
+  let fixedDomain = request.replace("www.", "");
+
+  if (fixedDomain === "google.com") {
+    fixedDomain = fixedDomain.replace(".com", ".ru");
+  }
+
+  background.sitesList.forEach(item => {
+    const siteID = item.name;
+    let siteCounter = +sessionStorage.getItem(siteID);
+    const isOverflowed = siteCounter <= 2;
+    if (item.domain === fixedDomain && isOverflowed) {
+      sessionStorage.setItem(siteID, ++siteCounter);
+      console.log(item.name);
+    } else {
+      console.log("govno");
+    }
+    // console.log(domainToList);
+  });
 });
