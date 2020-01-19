@@ -23,7 +23,7 @@ class Background {
       console.log("added");
     } else if (
       merchants !== this.json ||
-      this.time - +localStorage.getItem("time") > 10000 //* 60 * 60 стоит 10сек
+      this.time - +localStorage.getItem("time") > 10000 //* 60 * 60 время обновлений
     ) {
       this.updateMerchants();
 
@@ -41,11 +41,6 @@ class Background {
 window.background = new Background();
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  //   console.log(response);
-  //   console.log(sender);
-  //   console.log(sendResponse);
-  sendResponse("test");
-
   let fixedDomain = request.replace("www.", "");
 
   if (fixedDomain === "google.com") {
@@ -59,9 +54,12 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (item.domain === fixedDomain && isOverflowed) {
       sessionStorage.setItem(siteID, ++siteCounter);
       console.log(item.name);
+      sendResponse(true);
+      return;
     } else {
       console.log("govno");
     }
     // console.log(domainToList);
   });
+  sendResponse(false);
 });

@@ -4,5 +4,6 @@ body {
   width: 200px;
 }
 
-#list {
+#list a {
+  display: block;
 }
