@@ -41,21 +41,20 @@ class Background {
 window.background = new Background();
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  let fixedDomain = request.domain.replace("www.", "");
+
+  if (fixedDomain === "google.com") {
+    fixedDomain = fixedDomain.replace(".com", ".ru");
+  }
   switch (request.action) {
     case "checkSite":
-      let fixedDomain = request.domain.replace("www.", "");
-
-      if (fixedDomain === "google.com") {
-        fixedDomain = fixedDomain.replace(".com", ".ru");
-      }
-
       background.sitesList.forEach(item => {
         const siteID = item.name;
         let siteCounter = +sessionStorage.getItem(siteID);
         const isOverflowed = siteCounter <= 2;
         if (item.domain === fixedDomain && isOverflowed) {
           sessionStorage.setItem(siteID, ++siteCounter);
-          console.log(item.name);
+          // console.log(item.name);
           sendResponse(item.message);
           return;
         } else {
@@ -65,7 +64,12 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       });
       sendResponse(false);
       break;
-    case "closedMesage":
+    case "closedMessage":
+      const site = background.sitesList.find(
+        item => item.domain === fixedDomain
+      );
+      sessionStorage.setItem(site.name, 3);
+
       break;
   }
 });
