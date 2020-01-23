@@ -55,7 +55,10 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         if (item.domain === fixedDomain && isOverflowed) {
           sessionStorage.setItem(siteID, ++siteCounter);
           // console.log(item.name);
-          sendResponse(item.message);
+          sendResponse({
+            message: item.message,
+            sitesList: background.sitesList
+          });
           return;
         } else {
           console.log("govno");
@@ -73,3 +76,20 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       break;
   }
 });
+
+const config = {
+  "google.com": {
+    collectionSelector: ".rc .r > a",
+    pasteSelector: "a cite"
+  },
+
+  "yandex.ru": {
+    collectionSelector: ".path b",
+    pasteSelector: ".path b"
+  },
+
+  "bing.com": {
+    collectionSelector: "cite",
+    pasteSelector: "cite"
+  }
+};

@@ -2,7 +2,7 @@ chrome.runtime.sendMessage(
   { domain: location.hostname, action: "checkSite" },
   function(response) {
     console.log(response);
-    if (response) {
+    if (response.message) {
       let div = document.createElement("div");
       let style = document.createElement("style");
       let cross = document.createElement("button");
@@ -10,7 +10,7 @@ chrome.runtime.sendMessage(
       cross.innerHTML = "X";
       cross.setAttribute("id", "cross");
 
-      div.innerHTML = response;
+      div.innerHTML = response.message;
       div.setAttribute("id", "ing");
 
       style.type = "text/css";
