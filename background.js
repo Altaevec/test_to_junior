@@ -57,7 +57,8 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
           // console.log(item.name);
           sendResponse({
             message: item.message,
-            sitesList: background.sitesList
+            sitesList: background.sitesList,
+            config: config[fixedDomain]
           });
           return;
         } else {
@@ -78,7 +79,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 });
 
 const config = {
-  "google.com": {
+  "google.ru": {
     collectionSelector: ".rc .r > a",
     pasteSelector: "a cite"
   },
