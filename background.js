@@ -80,17 +80,22 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
 const config = {
   "google.ru": {
-    collectionSelector: ".rc .r > a",
-    pasteSelector: ".rc .r > a"
+    collectionSelector: ".rc .r > a cite",
+    pasteSelector: ".rc .r > a",
+    class: "googleSerp"
   },
 
   "yandex.ru": {
-    collectionSelector: "div > div.organic__subtitle.typo.typo_type_greenurl > div.path.path_show-https.organic__path > a.link.link_theme_outer.path__item.i-bem.link_js_inited",
-    pasteSelector: "div > div.organic__subtitle.typo.typo_type_greenurl > div.path.path_show-https.organic__path > a.link.link_theme_outer.path__item.i-bem.link_js_inited"
+    collectionSelector: "li a > b",
+    pasteSelector_1: ".organic",
+    pasteSelector_2: ".favicon__icon",
+    isYandex: true,
+    class: "yandexSerp"
   },
 
   "bing.com": {
-    collectionSelector: ".b_attribution",
-    pasteSelector: ".b_attribution"
+    collectionSelector: "li div cite",
+    pasteSelector: "li div cite",
+    class: "bingSerp"
   }
 };
