@@ -81,16 +81,16 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 const config = {
   "google.ru": {
     collectionSelector: ".rc .r > a",
-    pasteSelector: "a cite"
+    pasteSelector: ".rc .r > a"
   },
 
   "yandex.ru": {
-    collectionSelector: ".path b",
-    pasteSelector: ".path b"
+    collectionSelector: "div > div.organic__subtitle.typo.typo_type_greenurl > div.path.path_show-https.organic__path > a.link.link_theme_outer.path__item.i-bem.link_js_inited",
+    pasteSelector: "div > div.organic__subtitle.typo.typo_type_greenurl > div.path.path_show-https.organic__path > a.link.link_theme_outer.path__item.i-bem.link_js_inited"
   },
 
   "bing.com": {
-    collectionSelector: "cite",
-    pasteSelector: "cite"
+    collectionSelector: ".b_attribution",
+    pasteSelector: ".b_attribution"
   }
 };
