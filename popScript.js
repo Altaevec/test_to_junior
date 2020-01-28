@@ -1,3 +1,5 @@
+// TODO: убрать закоменченные логи и ненужные комменты
+
 chrome.runtime.getBackgroundPage(({ background }) => {
   //   console.log(background);
   //   console.log(background.newList);

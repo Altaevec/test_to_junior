@@ -1,5 +1,6 @@
 "use strict";
 
+// TODO: это велосидеп var url = new URL("https://www.google.com/123") -> url.host === "www.google.com"
 const extractDomain = url => {
   if (!url) return url;
   let domain;
@@ -22,6 +23,8 @@ chrome.runtime.sendMessage(
   function(response) {
     // console.log(response);
     if (response.message) {
+      //TODO: id элементов которые ты встраивешь в слуществущюий DOM стоить делать более уникальными. Напимер добавлять перфикс своего приложения.
+
       let div = document.createElement("div");
       let style = document.createElement("style");
       let cross = document.createElement("button");
@@ -92,6 +95,8 @@ chrome.runtime.sendMessage(
 
       document.getElementsByTagName("body")[0].append(div);
       div.appendChild(cross);
+
+      // TODO: addEventListener можно и почистить после клика
       cross.addEventListener("click", () => {
         chrome.runtime.sendMessage({
           domain: location.hostname,
@@ -100,13 +105,18 @@ chrome.runtime.sendMessage(
         div.remove();
       });
 
+
+      // TODO: имя смешное. Наверное это просто selectors;) Не объязательно писать в имени то откуда ты это получил
       let arrayFromCollection = Array.from(
         document.querySelectorAll(response.config.collectionSelector)
       );
 
+      // TODO: Зачем в принципе нужна эта переменная? Либо делай валидацию по ней, либо используй response.sitesList, тк она довольно короткая
       let sites = response.sitesList;
       // console.log(sites);
 
+      // TODO: У тебя дублируется логика, ты уже делаешь проверку в бекграунде и оттуда возращаешь конфиг
+      //  можешь сам объект сайта возращать еще и убрать все циклы и проверки тут.
       arrayFromCollection.forEach(item => {
         sites.forEach(conf => {
           // console.log(conf);
