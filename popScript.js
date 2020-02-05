@@ -1,10 +1,7 @@
-// TODO: убрать закоменченные логи и ненужные комменты
+// TODO: убрать закоменченные логи и ненужные комменты done
 
 chrome.runtime.getBackgroundPage(({ background }) => {
-  //   console.log(background);
-  //   console.log(background.newList);
   background.sitesList.forEach(item => {
-    //фильтр
     let link = document.createElement("a");
     link.href = `http://www.${item.domain}`;
     link.target = "_blank";
@@ -12,5 +9,3 @@ chrome.runtime.getBackgroundPage(({ background }) => {
     document.getElementById("list").append(link);
   });
 });
-
-// alert("хуй");
